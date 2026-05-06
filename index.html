@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Well.info — Local Website Developers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --card: #161616;
+    --border: rgba(255,255,255,0.07);
+    --accent: #7CFF6B;
+    --accent2: #B8FF4F;
+    --text: #f0f0ee;
+    --muted: #888880;
+    --heading: 'Syne', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+  }
+
+  .logo {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); }
+
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #0a0a0a !important;
+    padding: 0.55rem 1.3rem;
+    border-radius: 100px;
+    font-weight: 500 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent2) !important;
+    transform: translateY(-1px);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,255,107,0.09) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,255,107,0.05) 0%, transparent 70%);
+    bottom: -100px; left: -150px;
+    pointer-events: none;
+    animation: pulse 8s ease-in-out infinite reverse;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.2s;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: clamp(3.2rem, 7vw, 6.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    margin-top: 1.8rem;
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(124,255,107,0.2);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .stat-num {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    letter-spacing: 0.03em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    background: var(--surface);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .marquee-dot { color: var(--accent); font-size: 1rem; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 4rem; }
+
+  .section-tag {
+    font-size: 0.73rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 18px; height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    max-width: 650px;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 4rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .step {
+    background: var(--card);
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .step:hover { background: #1a1a1a; }
+
+  .step-num {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 3.5rem;
+    color: rgba(124,255,107,0.12);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  .step h3 {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.01em;
+  }
+
+  .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(124,255,107,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover {
+    border-color: rgba(124,255,107,0.2);
+    transform: translateY(-3px);
+  }
+
+  .service-card:hover::after { opacity: 1; }
+
+  .service-icon {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-card h3 {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+
+  .service-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; }
+
+  .service-price {
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+  }
+
+  /* PRICING */
+  .pricing-section { background: var(--surface); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .price-card.featured {
+    border-color: var(--accent);
+    position: relative;
+  }
+
+  .price-card.featured::before {
+    content: 'Most Popular';
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #0a0a0a;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.9rem;
+    border-radius: 100px;
+  }
+
+  .price-card:hover {
+    border-color: rgba(124,255,107,0.3);
+    transform: translateY(-4px);
+  }
+
+  .price-card.featured:hover { border-color: var(--accent); }
+
+  .price-tier {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .price-amount {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .price-amount sup {
+    font-size: 1.2rem;
+    vertical-align: super;
+    font-weight: 600;
+  }
+
+  .price-period { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+  .price-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 2rem; }
+
+  .price-features { list-style: none; margin-bottom: 2rem; }
+
+  .price-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.875rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .price-features li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .btn-plan {
+    display: block;
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-plan:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
+
+  .price-card.featured .btn-plan {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+  }
+
+  .price-card.featured .btn-plan:hover { background: var(--accent2); border-color: var(--accent2); }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+
+  .testi-card:hover { border-color: rgba(124,255,107,0.15); }
+
+  .stars {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .testi-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .testi-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #0a0a0a;
+    flex-shrink: 0;
+  }
+
+  .testi-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  .testi-biz { font-size: 0.78rem; color: var(--muted); }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, #0d150c 0%, #0a0a0a 50%, #0f140d 100%);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 8rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,255,107,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 { max-width: 100%; font-size: clamp(2.5rem, 5vw, 4rem); }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin: 1.5rem auto 2.5rem;
+    max-width: 480px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy { color: var(--muted); font-size: 0.8rem; }
+
+  /* LAYOUT HELPERS */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 0;
+  }
+
+  .max-w { max-width: 1200px; margin: 0 auto; }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .steps { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .cta-section { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">well<span>.info</span></a>
+  <ul>
+    <li><a href="#how">Process</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Site →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="max-w">
+    <div class="hero-tag">Vancouver Web Developers</div>
+    <h1>Websites that<br>get your business <em>found.</em></h1>
+    <p class="hero-sub">We build clean, fast, professional websites for local Vancouver businesses — starting at $250. No fluff, no contracts, just results.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">See Pricing →</a>
+      <a href="#how" class="btn-secondary">How it works</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">$250<span>+</span></div>
+        <div class="stat-label">Starting price</div>
+      </div>
+      <div>
+        <div class="stat-num">5<span>–7</span></div>
+        <div class="stat-label">Days to launch</div>
+      </div>
+      <div>
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Local Vancouver team</div>
+      </div>
+      <div>
+        <div class="stat-num">0</div>
+        <div class="stat-label">Monthly contracts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Mobile Mechanics</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Pressure Washing</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Home Cleaners</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Lawn Care</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Dog Walkers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Personal Trainers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Auto Detailers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Contractors</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Photographers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Food Trucks</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Mobile Mechanics</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Pressure Washing</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Home Cleaners</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Lawn Care</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Dog Walkers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Personal Trainers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Auto Detailers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Contractors</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Photographers</span>
+    <span class="marquee-item"><span class="marquee-dot">✦</span> Food Trucks</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="max-w">
+    <div class="reveal">
+      <div class="section-tag">Process</div>
+      <h2>Simple. Fast. Done right.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>You tell us about your business</h3>
+        <p>A quick call or message. Tell us what you do, who your customers are, and what you want the site to accomplish.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>We build your site in days</h3>
+        <p>We write the copy, design the pages, and build everything from scratch — optimized for Google and ready for mobile.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>You launch and start getting leads</h3>
+        <p>We hand you the keys. Your site is live, your Google Business Profile is set up, and customers can find you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background: var(--surface);">
+  <div class="max-w">
+    <div class="reveal">
+      <div class="section-tag">Services</div>
+      <h2>Everything your business needs online</h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">🖥️</div>
+        <h3>Starter Website</h3>
+        <p>A clean, professional single-page site with your services, contact info, and a form. Perfect for tradespeople and solo operators who just need to look legit online.</p>
+        <div class="service-price">From $250</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📄</div>
+        <h3>Multi-Page Site</h3>
+        <p>Home, About, Services, and Contact pages. Ideal for businesses that offer multiple services or want to tell their full story to potential clients.</p>
+        <div class="service-price">From $400</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📍</div>
+        <h3>Google Business Setup</h3>
+        <p>We set up and optimize your Google Business Profile so you show up when people search locally. Photos, hours, service area — all handled.</p>
+        <div class="service-price">$75 add-on</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>Local SEO</h3>
+        <p>We write your site content with the keywords your customers actually search — so you rank higher over time without paying for ads.</p>
+        <div class="service-price">Included in all plans</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing-section">
+  <div class="max-w">
+    <div class="reveal">
+      <div class="section-tag">Pricing</div>
+      <h2>No surprises. One flat price.</h2>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount"><sup>$</sup>250</div>
+        <div class="price-period">one-time, CAD</div>
+        <div class="price-desc">Get online fast with a professional single-page website.</div>
+        <ul class="price-features">
+          <li>1-page website</li>
+          <li>Mobile responsive</li>
+          <li>Contact form</li>
+          <li>Basic SEO setup</li>
+          <li>2 rounds of revisions</li>
+          <li>Delivered in 5–7 days</li>
+        </ul>
+        <a href="#contact" class="btn-plan">Get Started</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier">Professional</div>
+        <div class="price-amount"><sup>$</sup>450</div>
+        <div class="price-period">one-time, CAD</div>
+        <div class="price-desc">A full website with multiple pages and everything you need to rank.</div>
+        <ul class="price-features">
+          <li>Up to 5 pages</li>
+          <li>Mobile responsive</li>
+          <li>Contact form + booking</li>
+          <li>Full local SEO</li>
+          <li>Google Business setup</li>
+          <li>3 rounds of revisions</li>
+          <li>Delivered in 7–10 days</li>
+        </ul>
+        <a href="#contact" class="btn-plan">Get Started</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Custom</div>
+        <div class="price-amount">Let's<br><span style="font-size:1.8rem">talk</span></div>
+        <div class="price-period">custom quote</div>
+        <div class="price-desc">E-commerce, booking systems, custom features — we'll scope it together.</div>
+        <ul class="price-features">
+          <li>Unlimited pages</li>
+          <li>E-commerce optional</li>
+          <li>Online booking system</li>
+          <li>Custom design</li>
+          <li>Priority delivery</li>
+          <li>Ongoing support available</li>
+        </ul>
+        <a href="#contact" class="btn-plan">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="max-w">
+    <div class="reveal">
+      <div class="section-tag">Reviews</div>
+      <h2>Local businesses love their new sites</h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"I was only on Craigslist before. Now I get 3–4 calls a week from Google. The site paid for itself in the first month."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MK</div>
+          <div>
+            <div class="testi-name">Marco K.</div>
+            <div class="testi-biz">Mobile Mechanic, Burnaby</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"They built the whole thing in a week and it looks better than companies that have been around for years. Worth every dollar."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div>
+            <div class="testi-name">Sarah R.</div>
+            <div class="testi-biz">House Cleaner, Vancouver</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"My customers can finally book online and I don't have to reply to every text manually. Game changer for my lawn care business."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">TN</div>
+          <div>
+            <div class="testi-name">Tyler N.</div>
+            <div class="testi-biz">Lawn Care, Surrey</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="cta-glow"></div>
+  <div style="position:relative">
+    <div class="section-tag" style="justify-content:center">Get Started</div>
+    <h2>Ready to get found<br>on Google?</h2>
+    <p>Tell us about your business and we'll get back to you within 24 hours with a plan and a quote.</p>
+    <a href="mailto:hello@well.info" class="btn-primary" style="display:inline-flex">Email us at hello@well.info →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">well<span>.info</span></div>
+  <ul class="footer-links">
+    <li><a href="#how">Process</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 well.info — Vancouver, BC</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
