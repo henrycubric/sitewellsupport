@@ -43,8 +43,8 @@ export default function Home() {
       <section className="pt-16">
         <ContainerScroll
           titleComponent={
-            <div className="mb-8">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase mb-6" style={{ color: C.secondary }}>
+            <div className="mb-8 text-center">
+              <span className="inline-flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase mb-6" style={{ color: C.secondary }}>
                 <span className="w-6 h-px" style={{ background: C.secondary }} />
                 Vancouver Web Developers
               </span>
