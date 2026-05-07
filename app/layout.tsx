@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { DM_Sans, Syne } from "next/font/google";
+import { Epilogue, Manrope } from "next/font/google";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const epilogue = Epilogue({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-epilogue",
 });
 
-const syne = Syne({
+const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-syne",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-manrope",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${dmSans.variable} ${syne.variable} antialiased`}>
+      <body className={`${epilogue.variable} ${manrope.variable} antialiased`}>
         {children}
       </body>
     </html>
