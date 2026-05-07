@@ -1,8 +1,6 @@
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { SplineScene } from "@/components/ui/splite";
-import { Card } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/spotlight";
-import Image from "next/image";
 import ContactForm from "@/components/ContactForm";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -67,14 +65,13 @@ export default function Home() {
             </div>
           }
         >
-          <Image
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=80"
-            alt="Website dashboard preview"
-            width={1400}
-            height={720}
-            className="mx-auto rounded-2xl object-cover h-full object-top"
-            draggable={false}
-          />
+          <div className="relative w-full h-full" style={{ background: C.card }}>
+            <Spotlight className="-top-20 left-1/2 -translate-x-1/2" size={400} />
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full"
+            />
+          </div>
         </ContainerScroll>
       </section>
 
@@ -127,34 +124,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── SPLINE CARD ── */}
-      <section className="py-20 px-6" style={{ background: C.surface }}>
-        <div className="max-w-5xl mx-auto">
-          <TAG>Experience</TAG>
-          <H2>Built to make an impression.</H2>
-          <Card className="w-full h-[500px] relative overflow-hidden" style={{ background: C.card, border: `1px solid ${C.border}` }}>
-            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" size={300} />
-            <div className="flex h-full">
-              <div className="flex-1 p-10 relative z-10 flex flex-col justify-center">
-                <h3 className="text-3xl md:text-4xl font-bold leading-tight" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>
-                  Interactive &<br />
-                  <span style={{ color: C.secondary }}>Modern Design</span>
-                </h3>
-                <p className="mt-4 max-w-xs text-sm leading-relaxed" style={{ color: C.muted }}>
-                  Every site we build is crafted to capture attention, work on any device, and convert visitors into customers.
-                </p>
-                <a href="#contact" className="mt-6 inline-flex w-fit items-center gap-2 font-semibold px-5 py-2.5 rounded-full text-sm transition-opacity hover:opacity-90" style={{ background: C.primary, color: "#fff" }}>
-                  Start your project →
-                </a>
-              </div>
-              <div className="flex-1 relative hidden md:block">
-                <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full" />
-              </div>
-            </div>
-          </Card>
         </div>
       </section>
 
