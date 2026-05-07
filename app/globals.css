@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand colours */
-  --primary:   #B05F73;
-  --secondary: #94D2BD;
-  --tertiary:  #E9D8A6;
-  --neutral:   #1F2937;
+  /* Brand colours — Stitch design system */
+  --primary:        #005F73;
+  --primary-dark:   #004655;
+  --secondary:      #94D2BD;
+  --secondary-bg:   #aeedd7;
+  --tertiary:       #E9D8A6;
 
-  /* Surface scale */
-  --bg:        #0E1A24;
-  --bg-surface:#132030;
-  --bg-card:   #1A2C3D;
-  --border:    rgba(148, 210, 189, 0.12);
+  /* Surfaces (light mode) */
+  --bg:             #f8f9ff;
+  --surface:        #eff4ff;
+  --card:           #ffffff;
+  --border:         rgba(0, 70, 85, 0.10);
 
   /* Text */
-  --text:      #F0EDE8;
-  --muted:     #7A8F9E;
+  --text:           #121c2a;
+  --muted:          #6f797c;
 
   --radius: 0.5rem;
 }
@@ -27,16 +28,10 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-manrope, sans-serif);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.6;
   overflow-x: hidden;
 }
-
-@keyframes spotlight {
-  0%   { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
-  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
-}
-.animate-spotlight { animation: spotlight 2s ease 0.75s 1 forwards; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -51,8 +46,8 @@ body {
 
 .loader {
   width: 32px; height: 32px;
-  border: 3px solid rgba(148,210,189,0.2);
-  border-top-color: var(--secondary);
+  border: 3px solid rgba(0,95,115,0.15);
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
