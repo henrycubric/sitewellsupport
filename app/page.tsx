@@ -180,7 +180,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <a href="#contact" style={{ display: "block", textAlign: "center", padding: "11px", borderRadius: "10px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none", ...(plan.featured ? { background: C.primary, color: "#fff" } : { border: `1.5px solid rgba(0,70,85,0.20)`, color: C.primaryDark }) }}>
+                <a href={`mailto:support@sitewell.info?subject=${encodeURIComponent(`${plan.tier} Plan — Website Inquiry`)}`} style={{ display: "block", textAlign: "center", padding: "11px", borderRadius: "10px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none", ...(plan.featured ? { background: C.primary, color: "#fff" } : { border: `1.5px solid rgba(0,70,85,0.20)`, color: C.primaryDark }) }}>
                   {plan.tier === "Custom" ? "Contact Us" : "Get Started"}
                 </a>
               </div>
