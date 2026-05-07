@@ -23,9 +23,10 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
-      - run: npm run build
+      - name: Build
+        run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /sitewellsupport
+          NODE_ENV: production
           NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
