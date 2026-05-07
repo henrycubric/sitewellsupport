@@ -41,20 +41,20 @@ export default function Home() {
       <section className="pt-16">
         <ContainerScroll
           titleComponent={
-            <div className="mb-8 text-center">
+            <div className="w-full max-w-3xl mx-auto px-6 mb-8 text-center">
               <span className="inline-flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase mb-6" style={{ color: C.secondary }}>
                 <span className="w-6 h-px" style={{ background: C.secondary }} />
                 Vancouver Web Developers
               </span>
-              <h1 className="font-extrabold tracking-tight leading-none text-[clamp(2.5rem,6vw,5.5rem)]" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>
+              <h1 className="w-full font-extrabold tracking-tight leading-none text-center text-[clamp(2.2rem,5.5vw,5rem)]" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>
                 Websites that get your
                 <br />
                 <span style={{ color: C.primary }}>business found.</span>
               </h1>
-              <p className="mt-4 text-lg max-w-lg mx-auto" style={{ color: C.muted }}>
+              <p className="mt-5 text-base md:text-lg max-w-md mx-auto text-center" style={{ color: C.muted }}>
                 Clean, fast sites for Vancouver businesses — starting at $250. No fluff, no contracts, just results.
               </p>
-              <div className="flex gap-3 justify-center mt-6 flex-wrap">
+              <div className="flex gap-3 justify-center mt-7 flex-wrap">
                 <a href="#pricing" className="inline-flex items-center gap-2 font-semibold px-6 py-3 rounded-full transition-opacity hover:opacity-90" style={{ background: C.primary, color: "#fff" }}>
                   See Pricing →
                 </a>
