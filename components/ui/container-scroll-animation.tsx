@@ -55,8 +55,8 @@ export const ContainerScroll = ({
 export const Header = ({ translate, titleComponent }: any) => {
   return (
     <motion.div
-      style={{ translateY: translate }}
-      className="div max-w-5xl mx-auto text-center"
+      style={{ translateY: translate, textAlign: "center", width: "100%" }}
+      className="max-w-5xl mx-auto text-center"
     >
       {titleComponent}
     </motion.div>

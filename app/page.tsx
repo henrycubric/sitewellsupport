@@ -5,7 +5,6 @@ import ContactForm from "@/components/ContactForm";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-// Design tokens
 const C = {
   primary:   "#B05F73",
   secondary: "#94D2BD",
@@ -20,14 +19,15 @@ const C = {
 };
 
 const TAG = ({ children }: { children: React.ReactNode }) => (
-  <p className="flex items-center gap-2 mb-3 text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: C.secondary }}>
+  <p className="flex items-center justify-center gap-2 mb-3 text-xs font-semibold tracking-[0.14em] uppercase text-center" style={{ color: C.secondary }}>
     <span className="w-4 h-px" style={{ background: C.secondary }} />
     {children}
+    <span className="w-4 h-px" style={{ background: C.secondary }} />
   </p>
 );
 
 const H2 = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-4xl font-extrabold tracking-tight mb-10 leading-tight" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>
+  <h2 className="text-4xl font-extrabold tracking-tight mb-10 leading-tight text-center" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>
     {children}
   </h2>
 );
@@ -41,24 +41,24 @@ export default function Home() {
       <section className="pt-16">
         <ContainerScroll
           titleComponent={
-            <div className="w-full max-w-3xl mx-auto px-6 mb-8 text-center">
-              <span className="inline-flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase mb-6" style={{ color: C.secondary }}>
-                <span className="w-6 h-px" style={{ background: C.secondary }} />
+            <div style={{ textAlign: "center", width: "100%", maxWidth: "720px", margin: "0 auto", padding: "0 24px 32px" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "11px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.secondary, marginBottom: "20px" }}>
+                <span style={{ width: "24px", height: "1px", background: C.secondary }} />
                 Vancouver Web Developers
+                <span style={{ width: "24px", height: "1px", background: C.secondary }} />
               </span>
-              <h1 className="w-full font-extrabold tracking-tight leading-none text-center text-[clamp(2.2rem,5.5vw,5rem)]" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>
-                Websites that get your
-                <br />
+              <h1 style={{ fontFamily: "var(--font-epilogue)", color: C.text, fontWeight: 800, lineHeight: 1, letterSpacing: "-0.03em", fontSize: "clamp(2.4rem, 5.5vw, 5rem)", textAlign: "center", margin: "0 0 20px" }}>
+                Websites that get your<br />
                 <span style={{ color: C.primary }}>business found.</span>
               </h1>
-              <p className="mt-5 text-base md:text-lg max-w-md mx-auto text-center" style={{ color: C.muted }}>
+              <p style={{ color: C.muted, fontSize: "1.05rem", lineHeight: 1.6, maxWidth: "420px", margin: "0 auto 28px", textAlign: "center" }}>
                 Clean, fast sites for Vancouver businesses — starting at $250. No fluff, no contracts, just results.
               </p>
-              <div className="flex gap-3 justify-center mt-7 flex-wrap">
-                <a href="#pricing" className="inline-flex items-center gap-2 font-semibold px-6 py-3 rounded-full transition-opacity hover:opacity-90" style={{ background: C.primary, color: "#fff" }}>
+              <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+                <a href="#pricing" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: C.primary, color: "#fff", fontWeight: 700, padding: "12px 24px", borderRadius: "999px", textDecoration: "none" }}>
                   See Pricing →
                 </a>
-                <a href="#how" className="inline-flex items-center gap-2 px-6 py-3 rounded-full transition-colors hover:opacity-80" style={{ border: `1px solid ${C.border}`, color: C.text }}>
+                <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: "8px", border: `1px solid ${C.border}`, color: C.text, padding: "12px 24px", borderRadius: "999px", textDecoration: "none" }}>
                   How it works
                 </a>
               </div>
@@ -108,7 +108,7 @@ export default function Home() {
 
       {/* ── HOW IT WORKS ── */}
       <section id="how" className="py-28 px-6" style={{ background: C.bg }}>
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto text-center">
           <TAG>Process</TAG>
           <H2>Simple. Fast. Done right.</H2>
           <div className="grid md:grid-cols-3 gap-px rounded-2xl overflow-hidden" style={{ background: C.border, border: `1px solid ${C.border}` }}>
@@ -117,7 +117,7 @@ export default function Home() {
               { n: "02", title: "We build your site in days",  body: "We write the copy, design the pages, and build from scratch — optimized for Google and ready for mobile." },
               { n: "03", title: "Launch and get leads",        body: "We hand you the keys. Your site is live, Google Business Profile is set up, and customers can find you." },
             ].map((step) => (
-              <div key={step.n} className="p-8 transition-colors" style={{ background: C.card }}>
+              <div key={step.n} className="p-8 text-center" style={{ background: C.card }}>
                 <div className="text-5xl font-extrabold mb-5" style={{ fontFamily: "var(--font-epilogue)", color: `${C.secondary}20` }}>{step.n}</div>
                 <h3 className="font-bold text-base mb-2" style={{ fontFamily: "var(--font-epilogue)", color: C.text }}>{step.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{step.body}</p>
@@ -128,11 +128,11 @@ export default function Home() {
       </section>
 
       {/* ── SERVICES ── */}
-      <section id="services" className="py-28 px-6" style={{ background: C.bg }}>
-        <div className="max-w-5xl mx-auto">
+      <section id="services" className="py-28 px-6" style={{ background: C.surface }}>
+        <div className="max-w-5xl mx-auto text-center">
           <TAG>Services</TAG>
           <H2>Everything your business needs online</H2>
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-5 text-left">
             {[
               { icon: "🖥️", title: "Starter Website",       desc: "Clean, professional single-page site with your services, contact info, and a form.",                           price: "From $250" },
               { icon: "📄", title: "Multi-Page Site",        desc: "Home, About, Services, and Contact pages — ideal for businesses with multiple offerings.",                    price: "From $400" },
@@ -151,11 +151,11 @@ export default function Home() {
       </section>
 
       {/* ── PRICING ── */}
-      <section id="pricing" className="py-28 px-6" style={{ background: C.surface }}>
-        <div className="max-w-5xl mx-auto">
+      <section id="pricing" className="py-28 px-6" style={{ background: C.bg }}>
+        <div className="max-w-5xl mx-auto text-center">
           <TAG>Pricing</TAG>
           <H2>No surprises. One flat price.</H2>
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-3 gap-5 text-left">
             {[
               { tier: "Starter",      price: "$250", period: "one-time, CAD", desc: "Get online fast with a professional single-page website.",                              features: ["1-page website","Mobile responsive","Contact form","Basic SEO setup","2 rounds of revisions","Delivered in 5–7 days"],          featured: false },
               { tier: "Professional", price: "$450", period: "one-time, CAD", desc: "A full website with multiple pages and everything you need to rank.",                   features: ["Up to 5 pages","Mobile responsive","Contact form + booking","Full local SEO","Google Business setup","3 rounds of revisions","Delivered in 7–10 days"], featured: true  },
@@ -189,17 +189,17 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-28 px-6" style={{ background: C.bg }}>
-        <div className="max-w-5xl mx-auto">
+      <section className="py-28 px-6" style={{ background: C.surface }}>
+        <div className="max-w-5xl mx-auto text-center">
           <TAG>Reviews</TAG>
           <H2>Local businesses love their new sites</H2>
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-3 gap-5 text-left">
             {[
               { quote: "I was only on Craigslist before. Now I get 3–4 calls a week from Google. The site paid for itself in the first month.",           name: "Marco K.", biz: "Mobile Mechanic, Burnaby",  init: "MK" },
               { quote: "They built the whole thing in a week and it looks better than companies that have been around for years. Worth every dollar.",     name: "Sarah R.", biz: "House Cleaner, Vancouver",  init: "SR" },
               { quote: "My customers can finally book online and I don't have to reply to every text manually. Game changer for my lawn care business.", name: "Tyler N.", biz: "Lawn Care, Surrey",          init: "TN" },
             ].map((t) => (
-              <div key={t.name} className="rounded-2xl p-7 transition-colors" style={{ background: C.card, border: `1px solid ${C.border}` }}>
+              <div key={t.name} className="rounded-2xl p-7" style={{ background: C.card, border: `1px solid ${C.border}` }}>
                 <div className="tracking-widest text-sm mb-4" style={{ color: C.tertiary }}>★★★★★</div>
                 <p className="text-sm italic leading-relaxed mb-5">&ldquo;{t.quote}&rdquo;</p>
                 <div className="flex items-center gap-3">
@@ -216,11 +216,11 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="py-28 px-6 relative overflow-hidden" style={{ background: C.surface }}>
+      <section id="contact" className="py-28 px-6 relative overflow-hidden" style={{ background: C.bg }}>
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[600px] h-[600px] rounded-full blur-[120px]" style={{ background: `${C.primary}15` }} />
         </div>
-        <div className="max-w-xl mx-auto relative">
+        <div className="max-w-xl mx-auto relative text-center">
           <TAG>Get Started</TAG>
           <h2 className="text-4xl font-extrabold tracking-tight text-center mb-3" style={{ fontFamily: "var(--font-epilogue)" }}>
             Ready to get found on Google?
